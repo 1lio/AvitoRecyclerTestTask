@@ -1,4 +1,4 @@
-package ru.avito.recycler
+package ru.avito.recycler.view
 
 import android.os.Bundle
 import android.view.View
