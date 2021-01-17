@@ -5,6 +5,7 @@ import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.util.AttributeSet
 import androidx.recyclerview.widget.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
 import ru.avito.recycler.controller.ItemControllerImpl
 
 class MainRecyclerView @JvmOverloads constructor(context: Context, attr: AttributeSet? = null) :
