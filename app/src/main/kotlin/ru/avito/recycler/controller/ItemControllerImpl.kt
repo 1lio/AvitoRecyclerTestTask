@@ -44,7 +44,7 @@ object ItemControllerImpl : ItemController {
     }
 
 
-    // Для тех кто хочет подписаться)
+    // Здесь будет подписываться RecyclerView на обновление
     fun subscribeAddedItemPosition(): Flow<Int> = flow {
         while (true) {
             delay(5000)
@@ -60,7 +60,6 @@ object ItemControllerImpl : ItemController {
 
     override fun getListItems(): MutableList<Item> = listItem
 
-    // Здесь будет подписываться RecyclerView на обновление
     private fun subscribeData() {
         GlobalScope.launch {
             ItemGenerator.runGenerator().collect {
