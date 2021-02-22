@@ -3,28 +3,26 @@ package ru.avito.recycler.model
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
-import ru.avito.recycler.controller.ItemControllerImpl
+import kotlin.random.Random
 
+/* Тут была лишняя связка с контроллером. Использовался Dispatcher.IO, в то время как у нас шла
+* интенсивная работа)) */
+
+// Эта штука генерит асинхронные данные
 object ItemGenerator {
 
-    private const val LIST_MAX_SIZE = 100  // Ограничение размера списка, сделано осознанно :)
-    private const val TIME_DELAY = 5000L   // Задержка перед добавлением элемента
+    // Задержка перед добавлением элемента
+    private const val DELAY_MIN = 1000L
+    private const val DELAY_MAX = 5000L
 
-    // Вроде эмуляции соединения с сервиром.
     // Данные приходят через определенное время
-
     fun runGenerator(): Flow<Item> = flow {
-
         while (true) {
 
-            // Пусть генератор знает размер списка
-            if (ItemControllerImpl.getCountItems() <= LIST_MAX_SIZE) {
-                delay(TIME_DELAY)
-                emit(Item(ItemControllerImpl.getCountItems() + 1))
-            }
-
+            // Пусть генератор создает Item 1 раз в случайное время
+            delay(Random.nextLong(DELAY_MIN, DELAY_MAX))
+            emit(Item())
         }
-
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(Dispatchers.Default)
 
 }
