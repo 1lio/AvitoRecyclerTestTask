@@ -1,9 +1,9 @@
-package ru.avito.recycler.controller
+package ru.avito.recycler.repository
 
 import ru.avito.recycler.model.Item
 
 // На случай нескольких реализаций
-interface ItemController {
+interface ItemStorage {
 
     fun addItem(item: Item)
 
@@ -11,4 +11,7 @@ interface ItemController {
 
     fun getListItems(): List<Item>
 
+    fun getCountItems(): Int
+
+   // fun flowListItems() : Flow<Item>
 }
