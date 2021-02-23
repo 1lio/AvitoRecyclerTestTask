@@ -15,19 +15,19 @@ import javax.inject.Inject
 @HiltViewModel
 class ItemsViewModel @Inject constructor(private val repository: ItemStorage) : ViewModel() {
 
-    private val itemFlow: MutableLiveData<List<Item>> = MutableLiveData()
+    private val listItemLiveData: MutableLiveData<List<Item>> = MutableLiveData()
 
     init {
         checkRepository()
     }
 
     fun removeItem(itemId: Int) {
-        repository.removeItem(itemId)                  // Удаляем элемент
-        itemFlow.postValue(repository.getListItems())  // Сразу просим новый список
+        repository.removeItem(itemId)                          // Удаляем элемент
+        listItemLiveData.postValue(repository.getListItems())  // Сразу просим новый список
     }
 
     fun observeList(owner: LifecycleOwner, observer: Observer<List<Item>>) {
-        itemFlow.observe(owner, observer)
+        listItemLiveData.observe(owner, observer)
     }
 
     private fun checkRepository() {
@@ -36,7 +36,7 @@ class ItemsViewModel @Inject constructor(private val repository: ItemStorage) : 
 
             while (true) {
                 delay(1000L)
-                itemFlow.value = repository.getListItems()
+                listItemLiveData.value = repository.getListItems()
             }
 
         }
