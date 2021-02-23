@@ -112,6 +112,25 @@ class ItemRepositoryTest {
         Assert.assertEquals(listSize, maxSize)
     }
 
+    @Test
+    fun testPool() {
+        // При удаленнии эл помещается в пул. После добавляется из пула
+
+        // Удаляем первый элемент
+        val firsItem = repo!!.getListItems()[0]
+        repo!!.removeItem(0)
+
+        // Добавляем эл. должен взятся из пула
+        repo!!.addItem(firsItem) // Тут не важно что пришло, данные возьмуться из пула
+
+        // Т.к. список при добавлении суеся на случ место, и нет открытого доступа к пулу придется перебрать
+        val itemFromPool = repo!!.getListItems().sortedBy { it.id }[0]
+
+        Assert.assertEquals(firsItem.id, itemFromPool.id)
+
+    }
+
+
     @After
     fun tearDown() {
         repo = ItemRepository
