@@ -18,6 +18,7 @@ android {
         versionName = "1.0"
 
         consumerProguardFiles("consumer-rules.pro")
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -37,6 +38,10 @@ android {
         getByName("main").java.srcDirs("src/main/kotlin")
         getByName("test").java.srcDirs("src/test/kotlin")
     }
+
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -46,10 +51,17 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.2.0")
     implementation("com.google.android.material:material:1.3.0")
 
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.0")
+
     // DI: Dagger Hilt
     val hiltVer = rootProject.extra.get("hiltVer")
     implementation("com.google.dagger:hilt-android:$hiltVer")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVer")
+
+    // Tests
+    testImplementation("junit:junit:4.13.1")
+    androidTestImplementation("androidx.test.ext:junit:1.1.2")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
 }
 
 kapt {
