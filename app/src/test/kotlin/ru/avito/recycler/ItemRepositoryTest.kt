@@ -7,7 +7,6 @@ import org.junit.Test
 import ru.avito.recycler.model.Item
 import ru.avito.recycler.repository.ItemRepository
 
-
 // На холодном, без генерации
 class ItemRepositoryTest {
 
@@ -91,6 +90,27 @@ class ItemRepositoryTest {
         // Проверка на размер дополнительное есть в удалении и добавлении
     }
 
+    @Test
+    fun maxListSize() {
+
+        val maxSize = 100
+
+        // Пытаемся запихнуть в репо больше чем допустимо элементов
+        (0..maxSize).forEach {
+            repo!!.addItem(Item(it))
+        }
+
+        val listSize = repo!!.getCountItems()
+
+        Assert.assertEquals(listSize, maxSize)
+
+        // Удаляемые элементы попадают в пул поэтому размер списка не должен поменятся
+        (0 downTo maxSize).forEach {
+            repo!!.removeItem(it)
+        }
+
+        Assert.assertEquals(listSize, maxSize)
+    }
 
     @After
     fun tearDown() {
