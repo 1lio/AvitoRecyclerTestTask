@@ -26,10 +26,6 @@ class MainRecyclerAdapter(private val itemClickListener: ItemOnClick) :
 
     override fun getItemCount(): Int = currentList.size
 
-    override fun submitList(list: MutableList<Item>?) {
-        super.submitList(list?.let { ArrayList(it) })
-    }
-
     inner class ItemViewHolder(item: View) : RecyclerView.ViewHolder(item) {
 
         private val labelTitle = item.findViewById<TextView>(R.id.labelTitle)
@@ -49,6 +45,7 @@ class MainRecyclerAdapter(private val itemClickListener: ItemOnClick) :
 
     }
 
+    // Тут на основе полей мы принимаем решене изменился инет или его контент на основе полей
     private class ItemDiff : DiffUtil.ItemCallback<Item>() {
 
         override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
