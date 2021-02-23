@@ -18,6 +18,7 @@ object ItemRepository : ItemStorage {
     private val listItem = mutableListOf<Item>()
     private val pool = mutableSetOf<Item>()
 
+    // Счетчик нужен. Для корретктного добавления/удаления связанно с ограничением.
     private var itemCounter = START_COUNT_ITEMS + 1
 
     init {
@@ -39,12 +40,11 @@ object ItemRepository : ItemStorage {
             if (pool.size == 0) {
                 listItem.add(position, item)        // вставляем сгенереный Item
             } else {
-                listItem.add(position, pool.last()) // Добавляем Item из пула
-                pool.remove(pool.last())            // Удаляем из пула
+                listItem.add(position, pool.first()) // Добавляем Item из пула
+                pool.remove(pool.first())            // Удаляем из пула
             }
 
             Log.i(LOG_TAG, "ItemRepository: addItem : $item")
-
             itemCounter++
         }
 
