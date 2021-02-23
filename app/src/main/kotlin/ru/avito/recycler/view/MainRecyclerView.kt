@@ -3,16 +3,21 @@ package ru.avito.recycler.view
 import android.content.Context
 import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.util.AttributeSet
-import androidx.recyclerview.widget.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
-import ru.avito.recycler.controller.ItemControllerImpl
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import ru.avito.recycler.viewmodel.ItemsViewModel
 
 class MainRecyclerView @JvmOverloads constructor(context: Context, attr: AttributeSet? = null) :
     RecyclerView(context, attr) {
 
-    private val controller = ItemControllerImpl
-    private val mainRecyclerAdapter = MainRecyclerAdapter()
+    private val mainRecyclerAdapter = MainRecyclerAdapter(onClickOrder())
+
+    // оч плохо
+    private val activity = context as MainActivity
+
+    private val viewModel: ItemsViewModel = ViewModelProvider(activity)[ItemsViewModel::class.java]
 
     init {
 
@@ -41,16 +46,14 @@ class MainRecyclerView @JvmOverloads constructor(context: Context, attr: Attribu
     }
 
     private fun observeNewItems() {
-
-        // Запускаем корутину
-        GlobalScope.launch(Dispatchers.Main) {
-
-            // Подписываемся
-            controller.subscribeAddedItemPosition().collect {
-                adapter?.notifyItemInserted(it)
-            }
-        }
-
+        viewModel.observeList(activity, {
+            mainRecyclerAdapter.submitList(it.toMutableList())
+        })
     }
 
+    private fun onClickOrder(): ItemOnClick = object : ItemOnClick {
+        override fun onRemoveItem(id: Int) {
+            viewModel.removeItem(id)
+        }
+    }
 }
