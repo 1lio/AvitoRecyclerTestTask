@@ -1,3 +1,6 @@
+2 более правильное решение (на мой взгляд) в паралельной [ветке](https://github.com/1lio/AvitoRecyclerTestTask/tree/what_if). 
+MVVM, DaggerHilt, DiffUtil. Нет жесткой связки.
+
 # Изменчивый Recycler
 У нас есть экран с RecyclerView, на нем есть список в два столбца, изначально 15 элементов.
 
