@@ -1,4 +1,4 @@
-2 более правильное решение (на мой взгляд) в паралельной [ветке](https://github.com/1lio/AvitoRecyclerTestTask/tree/what_if). 
+Второе более правильное решение (на мой взгляд) в паралельной [ветке](https://github.com/1lio/AvitoRecyclerTestTask/tree/what_if).
 MVVM, DaggerHilt, DiffUtil. Нет жесткой связки.
 
 # Изменчивый Recycler
